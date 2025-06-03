@@ -8,22 +8,23 @@ export async function middleware(req: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
     secureCookie: process.env.NODE_ENV === "production"
   });
-  
+
   console.log("Middleware path:", req.nextUrl.pathname);
   console.log("Auth token exists:", !!token);
-  
+
   // Paths that don't require authentication
   const publicPaths = [
-    "/auth/signin", 
+    "/auth/signin",
     "/api/auth",
     "/favicon.ico",
     "/_next",
-    "/images", 
-    "/public"
+    "/images",
+    "/public",
+    "/chat" // Allow bypass for development
     // Add other public paths here if needed
   ];
-  
-  const isPublicPath = publicPaths.some(path => 
+
+  const isPublicPath = publicPaths.some(path =>
     req.nextUrl.pathname.startsWith(path)
   );
 
@@ -40,7 +41,7 @@ export async function middleware(req: NextRequest) {
     signInUrl.searchParams.set("callbackUrl", "/");
     return NextResponse.redirect(signInUrl);
   }
-  
+
   return NextResponse.next();
 }
 
