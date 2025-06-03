@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 'use client'
 import type { FC } from 'react'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import produce, { setAutoFreeze } from 'immer'
 import { useBoolean, useGetState } from 'ahooks'
@@ -19,7 +19,7 @@ import useBreakpoints, { MediaType } from '@/hooks/use-breakpoints'
 import Loading from '@/app/components/base/loading'
 import { replaceVarWithValues, userInputsFormToPromptVariables } from '@/utils/prompt'
 import AppUnavailable from '@/app/components/app-unavailable'
-import { API_KEY, APP_ID, APP_INFO, isShowPrompt, promptTemplate } from '@/config'
+import { API_KEY, API_URL, APP_ID, APP_INFO, isShowPrompt, promptTemplate } from '@/config'
 import type { Annotation as AnnotationType } from '@/types/log'
 import { addFileInfos, sortAgentSorts } from '@/utils/tools'
 
@@ -27,7 +27,41 @@ const Main: FC = () => {
   const { t } = useTranslation()
   const media = useBreakpoints()
   const isMobile = media === MediaType.mobile
-  const hasSetAppConfig = APP_ID && API_KEY
+
+  // Check for development bypass parameter
+  const [isDevelopmentBypass, setIsDevelopmentBypass] = useState(false)
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search)
+    const bypassParam = searchParams.get('bypass')
+    const bypassCookie = document.cookie.includes('dev-bypass=true')
+
+    if (bypassParam === 'dev' || bypassCookie) {
+      setIsDevelopmentBypass(true)
+      console.log('Development bypass mode enabled')
+    }
+
+    // Allow clearing bypass mode
+    if (bypassParam === 'clear') {
+      setIsDevelopmentBypass(false)
+      document.cookie = 'dev-bypass=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;'
+      console.log('Development bypass mode cleared')
+    }
+  }, [])
+
+  // Improved configuration check with debugging - now accounts for dev bypass
+  const hasSetAppConfig = isDevelopmentBypass || (APP_ID && API_KEY && APP_ID !== 'undefined' && API_KEY !== 'undefined' && APP_ID.trim() !== '' && API_KEY.trim() !== '')
+
+  // Debug logging for configuration
+  useEffect(() => {
+    console.log('App Configuration Debug:', {
+      APP_ID: APP_ID ? `Set (${APP_ID.substring(0, 10)}...)` : 'Not set',
+      API_KEY: API_KEY ? `Set (${API_KEY.substring(0, 10)}...)` : 'Not set',
+      API_URL: API_URL ? `Set (${API_URL})` : 'Not set',
+      isDevelopmentBypass,
+      hasSetAppConfig
+    })
+  }, [isDevelopmentBypass])
 
   /*
   * app info
@@ -98,6 +132,53 @@ const Main: FC = () => {
   const conversationName = currConversationInfo?.name || t('app.chat.newChatDefaultName') as string
   const conversationIntroduction = currConversationInfo?.introduction || ''
 
+  /*
+  * chat info. chat is under conversation.
+  */
+  const [chatList, setChatList, getChatList] = useGetState<ChatItem[]>([])
+  const chatListDomRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    // scroll to bottom
+    if (chatListDomRef.current)
+      chatListDomRef.current.scrollTop = chatListDomRef.current.scrollHeight
+  }, [chatList, currConversationId])
+  // user can not edit inputs if user had send message
+  const canEditInputs = !chatList.some(item => item.isAnswer === false) && isNewConversation
+  const createNewChat = () => {
+    // if new chat is already exist, do not create new chat
+    if (conversationList.some(item => item.id === '-1'))
+      return
+
+    setConversationList(produce(conversationList, (draft) => {
+      draft.unshift({
+        id: '-1',
+        name: newChatDefaultName,
+        inputs: newConversationInputs,
+        introduction: conversationIntroduction,
+      })
+    }))
+  }
+
+  // Memoize generateNewChatListWithOpenStatement to prevent recreation on every render
+  const generateNewChatListWithOpenStatement = useCallback((introduction?: string, inputs?: Record<string, any> | null) => {
+    let calculatedIntroduction = introduction || conversationIntroduction || ''
+    const calculatedPromptVariables = inputs || currInputs || null
+    if (calculatedIntroduction && calculatedPromptVariables)
+      calculatedIntroduction = replaceVarWithValues(calculatedIntroduction, promptConfig?.prompt_variables || [], calculatedPromptVariables)
+
+    const openStatement = {
+      id: `${Date.now()}`,
+      content: calculatedIntroduction,
+      isAnswer: true,
+      feedbackDisabled: true,
+      isOpeningStatement: isShowPrompt,
+    }
+    if (calculatedIntroduction)
+      return [openStatement]
+
+    return []
+  }, [conversationIntroduction, currInputs, promptConfig?.prompt_variables])
+
   const handleConversationSwitch = () => {
     if (!inited)
       return
@@ -121,7 +202,7 @@ const Main: FC = () => {
     }
 
     // update chat list of current conversation
-    if (!isNewConversation && !conversationIdChangeBecauseOfNew && !isResponding) {
+    if (!isNewConversation && !conversationIdChangeBecauseOfNew) {
       fetchChatList(currConversationId).then((res: any) => {
         const { data } = res
         const newChatList: ChatItem[] = generateNewChatListWithOpenStatement(notSyncToStateIntroduction, notSyncToStateInputs)
@@ -165,52 +246,8 @@ const Main: FC = () => {
     hideSidebar()
   }
 
-  /*
-  * chat info. chat is under conversation.
-  */
-  const [chatList, setChatList, getChatList] = useGetState<ChatItem[]>([])
-  const chatListDomRef = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    // scroll to bottom
-    if (chatListDomRef.current)
-      chatListDomRef.current.scrollTop = chatListDomRef.current.scrollHeight
-  }, [chatList, currConversationId])
-  // user can not edit inputs if user had send message
-  const canEditInputs = !chatList.some(item => item.isAnswer === false) && isNewConversation
-  const createNewChat = () => {
-    // if new chat is already exist, do not create new chat
-    if (conversationList.some(item => item.id === '-1'))
-      return
-
-    setConversationList(produce(conversationList, (draft) => {
-      draft.unshift({
-        id: '-1',
-        name: t('app.chat.newChatDefaultName'),
-        inputs: newConversationInputs,
-        introduction: conversationIntroduction,
-      })
-    }))
-  }
-
-  // sometime introduction is not applied to state
-  const generateNewChatListWithOpenStatement = (introduction?: string, inputs?: Record<string, any> | null) => {
-    let calculatedIntroduction = introduction || conversationIntroduction || ''
-    const calculatedPromptVariables = inputs || currInputs || null
-    if (calculatedIntroduction && calculatedPromptVariables)
-      calculatedIntroduction = replaceVarWithValues(calculatedIntroduction, promptConfig?.prompt_variables || [], calculatedPromptVariables)
-
-    const openStatement = {
-      id: `${Date.now()}`,
-      content: calculatedIntroduction,
-      isAnswer: true,
-      feedbackDisabled: true,
-      isOpeningStatement: isShowPrompt,
-    }
-    if (calculatedIntroduction)
-      return [openStatement]
-
-    return []
-  }
+  // Memoize commonly used translations to prevent re-renders
+  const newChatDefaultName = useMemo(() => t('app.chat.newChatDefaultName'), [t])
 
   // init
   useEffect(() => {
@@ -220,6 +257,31 @@ const Main: FC = () => {
     }
     (async () => {
       try {
+        // Reset app unavailable state in case it was previously set
+        setAppUnavailable(false)
+
+        // If in development bypass mode, provide default configuration
+        if (isDevelopmentBypass) {
+          setLocaleOnClient(APP_INFO.default_language, true)
+          setNewConversationInfo({
+            name: t('app.chat.newChatDefaultName'),
+            introduction: 'Welcome to the development chat!',
+          })
+          setPromptConfig({
+            prompt_template: promptTemplate,
+            prompt_variables: [],
+          } as PromptConfig)
+          setVisionConfig({
+            enabled: false,
+            number_limits: 2,
+            detail: Resolution.low,
+            transfer_methods: [TransferMethod.local_file],
+          })
+          setConversationList([])
+          setInited(true)
+          return
+        }
+
         const [conversationData, appParams] = await Promise.all([fetchConversations(), fetchAppParams()])
 
         // handle current conversation id
@@ -265,7 +327,7 @@ const Main: FC = () => {
         }
       }
     })()
-  }, [])
+  }, [isDevelopmentBypass])
 
   const [isResponding, { setTrue: setRespondingTrue, setFalse: setRespondingFalse }] = useBoolean(false)
   const [abortController, setAbortController] = useState<AbortController | null>(null)
@@ -327,6 +389,29 @@ const Main: FC = () => {
       notify({ type: 'info', message: t('app.errorMessage.waitForResponse') })
       return
     }
+
+    // In development bypass mode, simulate a response without making API calls
+    if (isDevelopmentBypass) {
+      const questionId = `question-${Date.now()}`
+      const questionItem = {
+        id: questionId,
+        content: message,
+        isAnswer: false,
+        message_files: files,
+      }
+
+      const responseId = `response-${Date.now()}`
+      const responseItem = {
+        id: responseId,
+        content: `Development mode response to: "${message}"\n\nThis is a simulated response since you're in development bypass mode. The actual API is not being called.`,
+        isAnswer: true,
+      }
+
+      const newList = [...getChatList(), questionItem, responseItem]
+      setChatList(newList)
+      return
+    }
+
     const data: Record<string, any> = {
       inputs: currInputs,
       query: message,
@@ -596,6 +681,17 @@ const Main: FC = () => {
   }
 
   const renderSidebar = () => {
+    // Allow rendering in development bypass mode even without full app config
+    if (isDevelopmentBypass && promptConfig) {
+      return (
+        <Sidebar
+          list={conversationList}
+          onCurrentIdChange={handleConversationIdChange}
+          currentId={currConversationId}
+          copyRight={APP_INFO.copyright || APP_INFO.title}
+        />
+      )
+    }
     if (!APP_ID || !APP_INFO || !promptConfig)
       return null
     return (
@@ -608,11 +704,19 @@ const Main: FC = () => {
     )
   }
 
-  if (appUnavailable)
-    return <AppUnavailable isUnknownReason={isUnknownReason} errMessage={!hasSetAppConfig ? 'Please set APP_ID and API_KEY in config/index.tsx' : ''} />
+  if (appUnavailable) {
+    const errorMessage = !hasSetAppConfig
+      ? 'Missing environment variables: Please create a .env.local file with NEXT_PUBLIC_APP_ID and NEXT_PUBLIC_APP_KEY'
+      : ''
+    return <AppUnavailable isUnknownReason={isUnknownReason} errMessage={errorMessage} />
+  }
 
-  if (!APP_ID || !APP_INFO || !promptConfig)
+  // Allow loading to continue in development bypass mode
+  if (isDevelopmentBypass && promptConfig) {
+    // Continue to render the main app
+  } else if (!APP_ID || !APP_INFO || !promptConfig) {
     return <Loading type='app' />
+  }
 
   return (
     <div className='bg-gray-100'>

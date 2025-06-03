@@ -2,6 +2,27 @@ import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(req: NextRequest) {
+  // Check for development bypass in multiple ways
+  const bypassParam = req.nextUrl.searchParams.get('bypass');
+  const bypassCookie = req.cookies.get('dev-bypass')?.value;
+  const isDevelopmentBypass = bypassParam === 'dev' || bypassCookie === 'true';
+
+  if (isDevelopmentBypass) {
+    console.log("Development bypass detected, allowing access");
+
+    // Set a cookie to maintain bypass state across navigations
+    const response = NextResponse.next();
+    if (bypassParam === 'dev') {
+      response.cookies.set('dev-bypass', 'true', {
+        httpOnly: false,
+        secure: false,
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 24 // 24 hours
+      });
+    }
+    return response;
+  }
+
   // Get token with secure: false to ensure cookies are read properly
   const token = await getToken({
     req,
@@ -19,9 +40,8 @@ export async function middleware(req: NextRequest) {
     "/favicon.ico",
     "/_next",
     "/images",
-    "/public",
-    "/chat" // Allow bypass for development
-    // Add other public paths here if needed
+    "/public"
+    // Removed /chat from public paths since it should require auth unless bypassed
   ];
 
   const isPublicPath = publicPaths.some(path =>
