@@ -31,9 +31,9 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
     AzureADProvider({
-      clientId: process.env.AZURE_AD_CLIENT_ID || "7c9eea42-317c-42c8-a209-f58bd88099bc",
+      clientId: process.env.AZURE_AD_CLIENT_ID!,
       clientSecret: process.env.AZURE_AD_CLIENT_SECRET!,
-      tenantId: process.env.AZURE_AD_TENANT_ID || "c439d10b-6cb0-4b9f-8410-5bdafdb624ec",
+      tenantId: process.env.AZURE_AD_TENANT_ID!,
     }),
     // Add credentials provider for local admin login
     CredentialsProvider({
@@ -45,14 +45,14 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         console.log("Attempting to authorize admin credentials");
-        
+
         try {
           // Check if the credentials match the admin account
           const username = credentials?.username;
           const password = credentials?.password;
-          
+
           console.log("Checking credentials", { username, hasPassword: !!password });
-          
+
           // Simple static check for the admin account
           if (username === "admin" && password === "password123!") {
             console.log("Admin credentials matched");
@@ -64,7 +64,7 @@ export const authOptions: NextAuthOptions = {
               role: "admin",
             };
           }
-          
+
           console.log("Admin credentials did not match");
           // Authentication failed
           return null;
@@ -84,7 +84,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       console.log("session callback", { session: !!session, token: !!token });
       const extendedSession = session as ExtendedSession;
-      
+
       if (token.sub) {
         extendedSession.user.id = token.sub;
       }
@@ -109,14 +109,14 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, account, user }) {
       console.log("jwt callback", { token: !!token, account: !!account, user: !!user });
       const extendedToken = token as ExtendedJWT;
-      
+
       // Initial sign-in
       if (user) {
         // Map user properties to token
         extendedToken.name = user.name || 'Unknown';
         extendedToken.email = user.email;
         extendedToken.role = (user as any).role;
-        
+
         // Add OAuth properties if they exist
         if (account) {
           extendedToken.accessToken = account.access_token;
