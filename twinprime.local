@@ -1,0 +1,12 @@
+AADSTS50011: The redirect URI 'http://localhost:3000/api/auth/callback/azure-ad' specified in the request does not match the redirect URIs configured for the application '7c9eea42-317c-42c8-a209-f58bd88099bc'. Make sure the redirect URI sent in the request matches one added to your application in the Azure portal. Navigate to https://aka.ms/redirectUriMismatchError to learn more about how to fix this.
+
+
+roubleshooting details
+If you contact your administrator, send this info to them.
+Copy info to clipboard
+Request Id: cf008604-7771-4b76-b743-a18878791200
+Correlation Id: 4aed7763-5503-41ab-8c37-0f152fe992e5
+Timestamp: 2025-06-01T03:06:04Z
+Message: AADSTS50011: The redirect URI 'http://localhost:3000/api/auth/callback/azure-ad' specified in the request does not match the redirect URIs configured for the application '7c9eea42-317c-42c8-a209-f58bd88099bc'. Make sure the redirect URI sent in the request matches one added to your application in the Azure portal. Navigate to https://aka.ms/redirectUriMismatchError to learn more about how to fix this.
+Flag sign-in errors for review: Enable flagging
+If you plan on getting help for this problem, enable flagging and try to reproduce the error within 20 minutes. Flagged events make diagnostics available and are raised to admin attention.
