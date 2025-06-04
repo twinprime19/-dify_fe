@@ -12,16 +12,14 @@ const translation = {
     prompt: 'Prompt',
     privatePromptConfigTitle: 'Ajustes de conversación',
     publicPromptConfigTitle: 'Prompt inicial',
-    configStatusDes: 'Antes de comenzar, puede modificar la configuración de la conversación',
+    configStatusDes:
+      'Antes de comenzar, puede modificar la configuración de la conversación',
     configDisabled:
       'La configuración de la sesión anterior se ha utilizado para esta sesión.',
     startChat: 'Comenzar chat',
-    privacyPolicyLeft:
-      'Por favor lea la ',
-    privacyPolicyMiddle:
-      'política de privacidad',
-    privacyPolicyRight:
-      ' proporcionada por el desarrollador de la aplicación.',
+    privacyPolicyLeft: 'Por favor lea la ',
+    privacyPolicyMiddle: 'política de privacidad',
+    privacyPolicyRight: ' proporcionada por el desarrollador de la aplicación.',
   },
   errorMessage: {
     valueOfVarRequired: 'El valor de las variables no puede estar vacío',

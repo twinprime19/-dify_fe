@@ -17,7 +17,8 @@ const translation = {
     authorized: '認証済み',
     setup: '使用するために認証を設定',
     setupModalTitle: '認証設定',
-    setupModalTitleDescription: '資格情報を設定すると、ワークスペース内のすべてのメンバーがアプリケーションを編成する際にこのツールを使用できるようになります。',
+    setupModalTitleDescription:
+      '資格情報を設定すると、ワークスペース内のすべてのメンバーがアプリケーションを編成する際にこのツールを使用できるようになります。',
   },
   includeToolNum: '{{num}} のツールが含まれています',
   addTool: 'ツールを追加',

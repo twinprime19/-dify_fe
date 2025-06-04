@@ -19,7 +19,7 @@ export const imageUpload: ImageUpload = ({
   formData.append('file', file)
   const onProgress = (e: ProgressEvent) => {
     if (e.lengthComputable) {
-      const percent = Math.floor(e.loaded / e.total * 100)
+      const percent = Math.floor((e.loaded / e.total) * 100)
       onProgressCallback(percent)
     }
   }

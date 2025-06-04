@@ -17,7 +17,8 @@ const translation = {
     authorized: 'Đã ủy quyền',
     setup: 'Thiết lập ủy quyền để sử dụng',
     setupModalTitle: 'Thiết lập ủy quyền',
-    setupModalTitleDescription: 'Sau khi cấu hình thông tin xác thực, tất cả các thành viên trong không gian làm việc đều có thể sử dụng công cụ này khi sắp xếp các ứng dụng.',
+    setupModalTitleDescription:
+      'Sau khi cấu hình thông tin xác thực, tất cả các thành viên trong không gian làm việc đều có thể sử dụng công cụ này khi sắp xếp các ứng dụng.',
   },
   includeToolNum: 'Bao gồm {{num}} công cụ',
   addTool: 'Thêm công cụ',
@@ -87,12 +88,14 @@ const translation = {
   },
   noCustomTool: {
     title: 'Không có công cụ tùy chỉnh!',
-    content: 'Thêm và quản lý các công cụ tùy chỉnh của bạn tại đây để xây dựng các ứng dụng AI.',
+    content:
+      'Thêm và quản lý các công cụ tùy chỉnh của bạn tại đây để xây dựng các ứng dụng AI.',
     createTool: 'Tạo công cụ',
   },
   noSearchRes: {
     title: 'Xin lỗi, không tìm thấy kết quả!',
-    content: 'Chúng tôi không thể tìm thấy bất kỳ công cụ nào phù hợp với tìm kiếm của bạn.',
+    content:
+      'Chúng tôi không thể tìm thấy bất kỳ công cụ nào phù hợp với tìm kiếm của bạn.',
     reset: 'Đặt lại tìm kiếm',
   },
   builtInPromptTitle: 'Nhắc nhở',
@@ -100,4 +103,4 @@ const translation = {
   notAuthorized: 'Công cụ chưa được ủy quyền',
 }
 
-export default translation;
+export default translation

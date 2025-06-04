@@ -19,10 +19,10 @@ import type { OffsetOptions, Placement } from '@floating-ui/react'
 
 type PortalToFollowElemOptions = {
   /*
-  * top, bottom, left, right
-  * start, end. Default is middle
-  * combine: top-start, top-end
-  */
+   * top, bottom, left, right
+   * start, end. Default is middle
+   * combine: top-start, top-end
+   */
   placement?: Placement
   open?: boolean
   offset?: number | OffsetOptions
@@ -74,7 +74,7 @@ export function usePortalToFollowElem({
       ...interactions,
       ...data,
     }),
-    [open, setOpen, interactions, data],
+    [open, setOpen, interactions, data]
   )
 }
 
@@ -86,7 +86,9 @@ export function usePortalToFollowElemContext() {
   const context = React.useContext(PortalToFollowElemContext)
 
   if (context == null)
-    throw new Error('PortalToFollowElem components must be wrapped in <PortalToFollowElem />')
+    throw new Error(
+      'PortalToFollowElem components must be wrapped in <PortalToFollowElem />'
+    )
 
   return context
 }
@@ -106,8 +108,8 @@ export function PortalToFollowElem({
 }
 
 export const PortalToFollowElemTrigger = React.forwardRef<
-HTMLElement,
-React.HTMLProps<HTMLElement> & { asChild?: boolean }
+  HTMLElement,
+  React.HTMLProps<HTMLElement> & { asChild?: boolean }
 >(({ children, asChild = false, ...props }, propRef) => {
   const context = usePortalToFollowElemContext()
   const childrenRef = (children as any).ref
@@ -122,7 +124,7 @@ React.HTMLProps<HTMLElement> & { asChild?: boolean }
         ...props,
         ...children.props,
         'data-state': context.open ? 'open' : 'closed',
-      }),
+      })
     )
   }
 
@@ -141,14 +143,13 @@ React.HTMLProps<HTMLElement> & { asChild?: boolean }
 PortalToFollowElemTrigger.displayName = 'PortalToFollowElemTrigger'
 
 export const PortalToFollowElemContent = React.forwardRef<
-HTMLDivElement,
-React.HTMLProps<HTMLDivElement>
+  HTMLDivElement,
+  React.HTMLProps<HTMLDivElement>
 >(({ style, ...props }, propRef) => {
   const context = usePortalToFollowElemContext()
   const ref = useMergeRefs([context.refs.setFloating, propRef])
 
-  if (!context.open)
-    return null
+  if (!context.open) return null
 
   return (
     <FloatingPortal>

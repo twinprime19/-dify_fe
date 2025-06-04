@@ -8,7 +8,12 @@ const initI18next = async (lng: Locale, ns: string) => {
   const i18nInstance = createInstance()
   await i18nInstance
     .use(initReactI18next)
-    .use(resourcesToBackend((language: string, namespace: string) => import(`./lang/${namespace}.${language}.ts`)))
+    .use(
+      resourcesToBackend(
+        (language: string, namespace: string) =>
+          import(`./lang/${namespace}.${language}.ts`)
+      )
+    )
     .init({
       lng: lng === 'zh-Hans' ? 'zh' : lng,
       ns,
@@ -17,7 +22,11 @@ const initI18next = async (lng: Locale, ns: string) => {
   return i18nInstance
 }
 
-export async function useTranslation(lng: Locale, ns = '', options: Record<string, any> = {}) {
+export async function useTranslation(
+  lng: Locale,
+  ns = '',
+  options: Record<string, any> = {}
+) {
   const i18nextInstance = await initI18next(lng, ns)
   return {
     t: i18nextInstance.getFixedT(lng, ns, options.keyPrefix),

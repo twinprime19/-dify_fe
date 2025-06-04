@@ -16,11 +16,14 @@ export const useImageFiles = () => {
 
     if (index > -1) {
       const currentFile = files[index]
-      const newFiles = [...files.slice(0, index), { ...currentFile, ...imageFile }, ...files.slice(index + 1)]
+      const newFiles = [
+        ...files.slice(0, index),
+        { ...currentFile, ...imageFile },
+        ...files.slice(index + 1),
+      ]
       setFiles(newFiles)
       filesRef.current = newFiles
-    }
-    else {
+    } else {
       const newFiles = [...files, imageFile]
       setFiles(newFiles)
       filesRef.current = newFiles
@@ -32,7 +35,11 @@ export const useImageFiles = () => {
 
     if (index > -1) {
       const currentFile = files[index]
-      const newFiles = [...files.slice(0, index), { ...currentFile, deleted: true }, ...files.slice(index + 1)]
+      const newFiles = [
+        ...files.slice(0, index),
+        { ...currentFile, deleted: true },
+        ...files.slice(index + 1),
+      ]
       setFiles(newFiles)
       filesRef.current = newFiles
     }
@@ -43,7 +50,11 @@ export const useImageFiles = () => {
 
     if (index > -1) {
       const currentFile = files[index]
-      const newFiles = [...files.slice(0, index), { ...currentFile, progress: -1 }, ...files.slice(index + 1)]
+      const newFiles = [
+        ...files.slice(0, index),
+        { ...currentFile, progress: -1 },
+        ...files.slice(index + 1),
+      ]
       filesRef.current = newFiles
       setFiles(newFiles)
     }
@@ -54,7 +65,11 @@ export const useImageFiles = () => {
 
     if (index > -1) {
       const currentImageFile = files[index]
-      const newFiles = [...files.slice(0, index), { ...currentImageFile, progress: 100 }, ...files.slice(index + 1)]
+      const newFiles = [
+        ...files.slice(0, index),
+        { ...currentImageFile, progress: 100 },
+        ...files.slice(index + 1),
+      ]
       filesRef.current = newFiles
       setFiles(newFiles)
     }
@@ -67,19 +82,34 @@ export const useImageFiles = () => {
       const currentImageFile = files[index]
       imageUpload({
         file: currentImageFile.file!,
-        onProgressCallback: (progress) => {
-          const newFiles = [...files.slice(0, index), { ...currentImageFile, progress }, ...files.slice(index + 1)]
+        onProgressCallback: progress => {
+          const newFiles = [
+            ...files.slice(0, index),
+            { ...currentImageFile, progress },
+            ...files.slice(index + 1),
+          ]
           filesRef.current = newFiles
           setFiles(newFiles)
         },
-        onSuccessCallback: (res) => {
-          const newFiles = [...files.slice(0, index), { ...currentImageFile, fileId: res.id, progress: 100 }, ...files.slice(index + 1)]
+        onSuccessCallback: res => {
+          const newFiles = [
+            ...files.slice(0, index),
+            { ...currentImageFile, fileId: res.id, progress: 100 },
+            ...files.slice(index + 1),
+          ]
           filesRef.current = newFiles
           setFiles(newFiles)
         },
         onErrorCallback: () => {
-          notify({ type: 'error', message: t('common.imageUploader.uploadFromComputerUploadError') })
-          const newFiles = [...files.slice(0, index), { ...currentImageFile, progress: -1 }, ...files.slice(index + 1)]
+          notify({
+            type: 'error',
+            message: t('common.imageUploader.uploadFromComputerUploadError'),
+          })
+          const newFiles = [
+            ...files.slice(0, index),
+            { ...currentImageFile, progress: -1 },
+            ...files.slice(index + 1),
+          ]
           filesRef.current = newFiles
           setFiles(newFiles)
         },

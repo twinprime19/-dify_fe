@@ -28,11 +28,15 @@ const Uploader: FC<UploaderProps> = ({
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
 
-    if (!file)
-      return
+    if (!file) return
 
     if (limit && file.size > limit * 1024 * 1024) {
-      notify({ type: 'error', message: t('common.imageUploader.uploadFromComputerLimit', { size: limit }) })
+      notify({
+        type: 'error',
+        message: t('common.imageUploader.uploadFromComputerLimit', {
+          size: limit,
+        }),
+      })
       return
     }
 
@@ -52,26 +56,32 @@ const Uploader: FC<UploaderProps> = ({
         onUpload(imageFile)
         imageUpload({
           file: imageFile.file,
-          onProgressCallback: (progress) => {
+          onProgressCallback: progress => {
             onUpload({ ...imageFile, progress })
           },
-          onSuccessCallback: (res) => {
+          onSuccessCallback: res => {
             onUpload({ ...imageFile, fileId: res.id, progress: 100 })
           },
           onErrorCallback: () => {
-            notify({ type: 'error', message: t('common.imageUploader.uploadFromComputerUploadError') })
+            notify({
+              type: 'error',
+              message: t('common.imageUploader.uploadFromComputerUploadError'),
+            })
             onUpload({ ...imageFile, progress: -1 })
           },
         })
       },
-      false,
+      false
     )
     reader.addEventListener(
       'error',
       () => {
-        notify({ type: 'error', message: t('common.imageUploader.uploadFromComputerReadError') })
+        notify({
+          type: 'error',
+          message: t('common.imageUploader.uploadFromComputerReadError'),
+        })
       },
-      false,
+      false
     )
     reader.readAsDataURL(file)
   }
@@ -88,7 +98,7 @@ const Uploader: FC<UploaderProps> = ({
           absolute block inset-0 opacity-0 text-[0] w-full
           ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}
         `}
-        onClick={e => (e.target as HTMLInputElement).value = ''}
+        onClick={e => ((e.target as HTMLInputElement).value = '')}
         type='file'
         accept='.png, .jpg, .jpeg, .webp, .gif'
         onChange={handleChange}

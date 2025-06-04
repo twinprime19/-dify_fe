@@ -12,16 +12,13 @@ const translation = {
     prompt: 'Nhắc nhở',
     privatePromptConfigTitle: 'Cài đặt cuộc trò chuyện',
     publicPromptConfigTitle: 'Nhắc nhở ban đầu',
-    configStatusDes: 'Trước khi bắt đầu, bạn có thể chỉnh sửa cài đặt cuộc trò chuyện',
-    configDisabled:
-      'Cài đặt của phiên trước đã được sử dụng cho phiên này.',
+    configStatusDes:
+      'Trước khi bắt đầu, bạn có thể chỉnh sửa cài đặt cuộc trò chuyện',
+    configDisabled: 'Cài đặt của phiên trước đã được sử dụng cho phiên này.',
     startChat: 'Bắt đầu trò chuyện',
-    privacyPolicyLeft:
-      'Vui lòng đọc ',
-    privacyPolicyMiddle:
-      'chính sách bảo mật',
-    privacyPolicyRight:
-      ' được cung cấp bởi nhà phát triển ứng dụng.',
+    privacyPolicyLeft: 'Vui lòng đọc ',
+    privacyPolicyMiddle: 'chính sách bảo mật',
+    privacyPolicyRight: ' được cung cấp bởi nhà phát triển ứng dụng.',
   },
   errorMessage: {
     valueOfVarRequired: 'Giá trị của biến không thể để trống',
@@ -33,4 +30,4 @@ const translation = {
   },
 }
 
-export default translation;
+export default translation

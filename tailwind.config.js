@@ -3,6 +3,7 @@ module.exports = {
   content: [
     './app/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
+    './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     typography: require('./typography'),
@@ -34,7 +35,6 @@ module.exports = {
           50: '#F3FAF7',
           100: '#DEF7EC',
           800: '#03543F',
-
         },
         yellow: {
           100: '#FDF6B2',
@@ -61,6 +61,6 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/typography'),
-    require('@tailwindcss/line-clamp'),
+    // @tailwindcss/line-clamp is now built into Tailwind CSS core as of v3.3
   ],
 }

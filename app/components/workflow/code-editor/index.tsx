@@ -28,7 +28,7 @@ const languageMap = {
 
 const CodeEditor: FC<Props> = ({
   value = '',
-  onChange = () => { },
+  onChange = () => {},
   title,
   headerRight,
   language,
@@ -72,12 +72,10 @@ const CodeEditor: FC<Props> = ({
   }
 
   const outPutValue = (() => {
-    if (!isJSONStringifyBeauty)
-      return value as string
+    if (!isJSONStringifyBeauty) return value as string
     try {
       return JSON.stringify(value as object, null, 2)
-    }
-    catch (e) {
+    } catch (e) {
       return value as string
     }
   })()

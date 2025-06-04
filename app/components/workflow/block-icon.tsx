@@ -36,9 +36,15 @@ const getIcon = (type: BlockEnum, className: string) => {
     [BlockEnum.IfElse]: <IfElse className={className} />,
     [BlockEnum.HttpRequest]: <Http className={className} />,
     [BlockEnum.Answer]: <Answer className={className} />,
-    [BlockEnum.KnowledgeRetrieval]: <KnowledgeRetrieval className={className} />,
-    [BlockEnum.QuestionClassifier]: <QuestionClassifier className={className} />,
-    [BlockEnum.TemplateTransform]: <TemplatingTransform className={className} />,
+    [BlockEnum.KnowledgeRetrieval]: (
+      <KnowledgeRetrieval className={className} />
+    ),
+    [BlockEnum.QuestionClassifier]: (
+      <QuestionClassifier className={className} />
+    ),
+    [BlockEnum.TemplateTransform]: (
+      <TemplatingTransform className={className} />
+    ),
     [BlockEnum.VariableAssigner]: <VariableX className={className} />,
     [BlockEnum.Tool]: <VariableX className={className} />,
   }[type]
@@ -63,7 +69,8 @@ const BlockIcon: FC<BlockIconProps> = ({
   toolIcon,
 }) => {
   return (
-    <div className={`
+    <div
+      className={`
       flex items-center justify-center border-[0.5px] border-white/[0.02] text-white
       ${ICON_CONTAINER_CLASSNAME_SIZE_MAP[size]} 
       ${ICON_CONTAINER_BG_COLOR_MAP[type]}
@@ -71,49 +78,33 @@ const BlockIcon: FC<BlockIconProps> = ({
       ${className}
     `}
     >
-      {
-        type !== BlockEnum.Tool && (
-          getIcon(type, size === 'xs' ? 'w-3 h-3' : 'w-3.5 h-3.5')
-        )
-      }
-      {
-        type === BlockEnum.Tool && toolIcon && (
-          <>
-            {
-              typeof toolIcon === 'string'
-                ? (
-                  <div
-                    className='shrink-0 w-full h-full bg-cover bg-center rounded-md'
-                    style={{
-                      backgroundImage: `url(${toolIcon})`,
-                    }}
-                  ></div>
-                )
-                : (
-                  <AppIcon
-                    className='shrink-0 !w-full !h-full'
-                    size='tiny'
-                    icon={toolIcon?.content}
-                    background={toolIcon?.background}
-                  />
-                )
-            }
-          </>
-        )
-      }
+      {type !== BlockEnum.Tool &&
+        getIcon(type, size === 'xs' ? 'w-3 h-3' : 'w-3.5 h-3.5')}
+      {type === BlockEnum.Tool && toolIcon && (
+        <>
+          {typeof toolIcon === 'string' ? (
+            <div
+              className='shrink-0 w-full h-full bg-cover bg-center rounded-md'
+              style={{
+                backgroundImage: `url(${toolIcon})`,
+              }}
+            ></div>
+          ) : (
+            <AppIcon
+              className='shrink-0 !w-full !h-full'
+              size='tiny'
+              icon={toolIcon?.content}
+              background={toolIcon?.background}
+            />
+          )}
+        </>
+      )}
     </div>
   )
 }
 
-export const VarBlockIcon: FC<BlockIconProps> = ({
-  type,
-  className,
-}) => {
-  return (
-    <>
-      {getIcon(type, `w-3 h-3 ${className}`)}
-    </>
-  )
+export const VarBlockIcon: FC<BlockIconProps> = ({ type, className }) => {
+  return <>{getIcon(type, `w-3 h-3 ${className}`)}</>
 }
 
 export default memo(BlockIcon)

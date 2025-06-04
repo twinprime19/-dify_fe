@@ -7,7 +7,7 @@ const translation = {
     custom: 'Custom',
   },
   contribute: {
-    line1: 'I\'m interested in ',
+    line1: "I'm interested in ",
     line2: 'contributing tools to Dify.',
     viewGuide: 'View the guide',
   },
@@ -17,7 +17,8 @@ const translation = {
     authorized: 'Authorized',
     setup: 'Set up authorization to use',
     setupModalTitle: 'Set Up Authorization',
-    setupModalTitleDescription: 'After configuring credentials, all members within the workspace can use this tool when orchestrating applications.',
+    setupModalTitleDescription:
+      'After configuring credentials, all members within the workspace can use this tool when orchestrating applications.',
   },
   includeToolNum: '{{num}} tools included',
   addTool: 'Add Tool',
@@ -92,7 +93,7 @@ const translation = {
   },
   noSearchRes: {
     title: 'Sorry, no results!',
-    content: 'We couldn\'t find any tools that match your search.',
+    content: "We couldn't find any tools that match your search.",
     reset: 'Reset Search',
   },
   builtInPromptTitle: 'Prompt',

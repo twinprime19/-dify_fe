@@ -25,7 +25,9 @@ const PromptEditorHeightResizeWrap: FC<Props> = ({
 }) => {
   const [clientY, setClientY] = useState(0)
   const [isResizing, setIsResizing] = useState(false)
-  const [prevUserSelectStyle, setPrevUserSelectStyle] = useState(getComputedStyle(document.body).userSelect)
+  const [prevUserSelectStyle, setPrevUserSelectStyle] = useState(
+    getComputedStyle(document.body).userSelect
+  )
 
   const handleStartResize = useCallback((e: React.MouseEvent<HTMLElement>) => {
     setClientY(e.clientY)
@@ -39,21 +41,27 @@ const PromptEditorHeightResizeWrap: FC<Props> = ({
     document.body.style.userSelect = prevUserSelectStyle
   }, [prevUserSelectStyle])
 
-  const { run: didHandleResize } = useDebounceFn((e) => {
-    if (!isResizing)
-      return
+  const { run: didHandleResize } = useDebounceFn(
+    e => {
+      if (!isResizing) return
 
-    const offset = e.clientY - clientY
-    let newHeight = height + offset
-    setClientY(e.clientY)
-    if (newHeight < minHeight)
-      newHeight = minHeight
-    onHeightChange(newHeight)
-  }, {
-    wait: 0,
-  })
+      const offset = e.clientY - clientY
+      let newHeight = height + offset
+      setClientY(e.clientY)
+      if (newHeight < minHeight) newHeight = minHeight
+      onHeightChange(newHeight)
+    },
+    {
+      wait: 0,
+    }
+  )
 
-  const handleResize = useCallback(didHandleResize, [isResizing, height, minHeight, clientY])
+  const handleResize = useCallback(didHandleResize, [
+    isResizing,
+    height,
+    minHeight,
+    clientY,
+  ])
 
   useEffect(() => {
     document.addEventListener('mousemove', handleResize)
@@ -70,10 +78,9 @@ const PromptEditorHeightResizeWrap: FC<Props> = ({
   }, [handleStopResize])
 
   return (
-    <div
-      className='relative'
-    >
-      <div className={cn(className, 'overflow-y-auto')}
+    <div className='relative'>
+      <div
+        className={cn(className, 'overflow-y-auto')}
         style={{
           height,
         }}
@@ -85,7 +92,8 @@ const PromptEditorHeightResizeWrap: FC<Props> = ({
       {!hideResize && (
         <div
           className='absolute bottom-0 left-0 w-full flex justify-center h-2 cursor-row-resize'
-          onMouseDown={handleStartResize}>
+          onMouseDown={handleStartResize}
+        >
           <div className='w-5 h-[3px] rounded-sm bg-gray-300'></div>
         </div>
       )}

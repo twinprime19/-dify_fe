@@ -13,7 +13,8 @@ const useToggleExpend = ({ ref, hasFooter = true }: Params) => {
     setWrapHeight(ref.current?.clientHeight)
   }, [isExpand])
 
-  const wrapClassName = isExpand && 'absolute z-10 left-4 right-6 top-[52px] bottom-0 pb-4 bg-white'
+  const wrapClassName =
+    isExpand && 'absolute z-10 left-4 right-6 top-[52px] bottom-0 pb-4 bg-white'
 
   return {
     wrapClassName,

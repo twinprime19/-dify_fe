@@ -20,9 +20,12 @@ const translation = {
   },
   imageUploader: {
     uploadFromComputer: 'Subir desde el ordenador',
-    uploadFromComputerReadError: 'La lectura de la imagen falló, por favor inténtelo de nuevo.',
-    uploadFromComputerUploadError: 'Error al subir la imagen, por favor inténtelo de nuevo.',
-    uploadFromComputerLimit: 'Las imágenes subidas no pueden superar los {{size}} MB',
+    uploadFromComputerReadError:
+      'La lectura de la imagen falló, por favor inténtelo de nuevo.',
+    uploadFromComputerUploadError:
+      'Error al subir la imagen, por favor inténtelo de nuevo.',
+    uploadFromComputerLimit:
+      'Las imágenes subidas no pueden superar los {{size}} MB',
     pasteImageLink: 'Pegar enlace de imagen',
     pasteImageLinkInputPlaceholder: 'Pegar enlace de imagen aquí',
     pasteImageLinkInvalid: 'Enlace de imagen no válido',

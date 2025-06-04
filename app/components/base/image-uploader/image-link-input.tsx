@@ -9,9 +9,7 @@ type ImageLinkInputProps = {
   onUpload: (imageFile: ImageFile) => void
 }
 const regex = /^(https?|ftp):\/\//
-const ImageLinkInput: FC<ImageLinkInputProps> = ({
-  onUpload,
-}) => {
+const ImageLinkInput: FC<ImageLinkInputProps> = ({ onUpload }) => {
   const { t } = useTranslation()
   const [imageLink, setImageLink] = useState('')
 
@@ -33,7 +31,9 @@ const ImageLinkInput: FC<ImageLinkInputProps> = ({
         className='grow mr-0.5 px-1 h-[18px] text-[13px] outline-none appearance-none'
         value={imageLink}
         onChange={e => setImageLink(e.target.value)}
-        placeholder={t('common.imageUploader.pasteImageLinkInputPlaceholder') || ''}
+        placeholder={
+          t('common.imageUploader.pasteImageLinkInputPlaceholder') || ''
+        }
       />
       <Button
         type='primary'

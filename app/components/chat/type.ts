@@ -18,7 +18,7 @@ export type Annotation = {
 }
 
 export const MessageRatings = ['like', 'dislike', null] as const
-export type MessageRating = typeof MessageRatings[number]
+export type MessageRating = (typeof MessageRatings)[number]
 
 export type MessageMore = {
   time: string
@@ -31,8 +31,14 @@ export type Feedbacktype = {
   content?: string | null
 }
 
-export type FeedbackFunc = (messageId: string, feedback: Feedbacktype) => Promise<any>
-export type SubmitAnnotationFunc = (messageId: string, content: string) => Promise<any>
+export type FeedbackFunc = (
+  messageId: string,
+  feedback: Feedbacktype
+) => Promise<any>
+export type SubmitAnnotationFunc = (
+  messageId: string,
+  content: string
+) => Promise<any>
 
 export type DisplayScene = 'web' | 'console'
 

@@ -20,9 +20,12 @@ const translation = {
   },
   imageUploader: {
     uploadFromComputer: 'コンピューターからアップロード',
-    uploadFromComputerReadError: '画像の読み込みに失敗しました。もう一度お試しください。',
-    uploadFromComputerUploadError: '画像のアップロードに失敗しました。もう一度アップロードしてください。',
-    uploadFromComputerLimit: 'アップロードする画像は{{size}} MBを超えてはいけません',
+    uploadFromComputerReadError:
+      '画像の読み込みに失敗しました。もう一度お試しください。',
+    uploadFromComputerUploadError:
+      '画像のアップロードに失敗しました。もう一度アップロードしてください。',
+    uploadFromComputerLimit:
+      'アップロードする画像は{{size}} MBを超えてはいけません',
     pasteImageLink: '画像リンクを貼り付け',
     pasteImageLinkInputPlaceholder: 'ここに画像リンクを貼り付けてください',
     pasteImageLinkInvalid: '無効な画像リンクです',

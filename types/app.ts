@@ -33,16 +33,19 @@ export type SelectTypeFormItem = {
 /**
  * User Input Form Item
  */
-export type UserInputFormItem = {
-  'text-input': TextTypeFormItem
-} | {
-  'select': SelectTypeFormItem
-} | {
-  'paragraph': TextTypeFormItem
-}
+export type UserInputFormItem =
+  | {
+      'text-input': TextTypeFormItem
+    }
+  | {
+      select: SelectTypeFormItem
+    }
+  | {
+      paragraph: TextTypeFormItem
+    }
 
 export const MessageRatings = ['like', 'dislike', null] as const
-export type MessageRating = typeof MessageRatings[number]
+export type MessageRating = (typeof MessageRatings)[number]
 
 export type Feedbacktype = {
   rating: MessageRating

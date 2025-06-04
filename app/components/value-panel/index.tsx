@@ -21,18 +21,25 @@ const TemplateVarPanel: FC<ITemplateVarPanelProps> = ({
   isFold,
 }) => {
   return (
-    <div className={cn(isFold ? 'border border-indigo-100' : s.boxShodow, className, 'rounded-xl ')}>
+    <div
+      className={cn(
+        isFold ? 'border border-indigo-100' : s.boxShodow,
+        className,
+        'rounded-xl '
+      )}
+    >
       {/* header */}
       <div
-        className={cn(isFold && 'rounded-b-xl', 'rounded-t-xl px-6 py-4 bg-indigo-25 text-xs')}
+        className={cn(
+          isFold && 'rounded-b-xl',
+          'rounded-t-xl px-6 py-4 bg-indigo-25 text-xs'
+        )}
       >
         {header}
       </div>
       {/* body */}
       {!isFold && children && (
-        <div className='rounded-b-xl p-6'>
-          {children}
-        </div>
+        <div className='rounded-b-xl p-6'>{children}</div>
       )}
     </div>
   )
@@ -43,36 +50,36 @@ export const PanelTitle: FC<{ title: string; className?: string }> = ({
   className,
 }) => {
   return (
-    <div className={cn(className, 'flex items-center space-x-1 text-indigo-600')}>
+    <div
+      className={cn(className, 'flex items-center space-x-1 text-indigo-600')}
+    >
       <StarIcon />
       <span className='text-xs'>{title}</span>
     </div>
   )
 }
 
-export const VarOpBtnGroup: FC<{ className?: string; onConfirm: () => void; onCancel: () => void }> = ({
-  className,
-  onConfirm,
-  onCancel,
-}) => {
+export const VarOpBtnGroup: FC<{
+  className?: string
+  onConfirm: () => void
+  onCancel: () => void
+}> = ({ className, onConfirm, onCancel }) => {
   const { t } = useTranslation()
 
   return (
-    <div className={cn(className, 'flex mt-3 space-x-2 mobile:ml-0 tablet:ml-[128px] text-sm')}>
-      <Button
-        className='text-sm'
-        type='primary'
-        onClick={onConfirm}
-      >
+    <div
+      className={cn(
+        className,
+        'flex mt-3 space-x-2 mobile:ml-0 tablet:ml-[128px] text-sm'
+      )}
+    >
+      <Button className='text-sm' type='primary' onClick={onConfirm}>
         {t('common.operation.save')}
       </Button>
-      <Button
-        className='text-sm'
-        onClick={onCancel}
-      >
+      <Button className='text-sm' onClick={onCancel}>
         {t('common.operation.cancel')}
       </Button>
-    </div >
+    </div>
   )
 }
 

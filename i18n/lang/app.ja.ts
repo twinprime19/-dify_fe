@@ -13,20 +13,15 @@ const translation = {
     privatePromptConfigTitle: '会話設定',
     publicPromptConfigTitle: '初期プロンプト',
     configStatusDes: '開始前に、会話設定を変更できます',
-    configDisabled:
-      '前回のセッション設定がこのセッションで使用されています。',
+    configDisabled: '前回のセッション設定がこのセッションで使用されています。',
     startChat: '開始',
-    privacyPolicyLeft:
-      'ご利用前に、',
-    privacyPolicyMiddle:
-      'プライバシーポリシー',
-    privacyPolicyRight:
-      ' をお読みください。',
+    privacyPolicyLeft: 'ご利用前に、',
+    privacyPolicyMiddle: 'プライバシーポリシー',
+    privacyPolicyRight: ' をお読みください。',
   },
   errorMessage: {
     valueOfVarRequired: '変数の値は空にできません',
-    waitForResponse:
-      '前のメッセージの応答が完了するまでお待ちください。',
+    waitForResponse: '前のメッセージの応答が完了するまでお待ちください。',
   },
   variableTable: {
     optional: '任意',

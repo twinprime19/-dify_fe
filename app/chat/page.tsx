@@ -4,9 +4,7 @@ import React from 'react'
 import Main from '@/app/components'
 
 const ChatPage: FC = () => {
-    return (
-        <Main />
-    )
+  return <Main />
 }
 
-export default React.memo(ChatPage) 
+export default React.memo(ChatPage)

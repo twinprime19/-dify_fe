@@ -19,7 +19,7 @@ import toolsJa from './lang/tools.ja'
 import type { Locale } from '.'
 
 const resources = {
-  'en': {
+  en: {
     translation: {
       common: commonEn,
       app: appEn,
@@ -27,7 +27,7 @@ const resources = {
       tools: toolsEn,
     },
   },
-  'es': {
+  es: {
     translation: {
       common: commonEs,
       app: appEs,
@@ -41,7 +41,7 @@ const resources = {
       tools: toolsZh,
     },
   },
-  'vi': {
+  vi: {
     translation: {
       common: commonVi,
       app: appVi,
@@ -49,7 +49,7 @@ const resources = {
       tools: toolsVi,
     },
   },
-  'ja': {
+  ja: {
     translation: {
       common: commonJa,
       app: appJa,
@@ -59,7 +59,8 @@ const resources = {
   },
 }
 
-i18n.use(initReactI18next)
+i18n
+  .use(initReactI18next)
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({

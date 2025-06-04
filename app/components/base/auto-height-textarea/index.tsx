@@ -16,8 +16,19 @@ type IProps = {
 
 const AutoHeightTextarea = forwardRef(
   (
-    { value, onChange, placeholder, className, minHeight = 36, maxHeight = 96, autoFocus, controlFocus, onKeyDown, onKeyUp }: IProps,
-    outerRef: any,
+    {
+      value,
+      onChange,
+      placeholder,
+      className,
+      minHeight = 36,
+      maxHeight = 96,
+      autoFocus,
+      controlFocus,
+      onKeyDown,
+      onKeyUp,
+    }: IProps,
+    outerRef: any
   ) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const ref = outerRef || useRef<HTMLTextAreaElement>(null)
@@ -36,30 +47,36 @@ const AutoHeightTextarea = forwardRef(
         let hasFocus = false
         const runId = setInterval(() => {
           hasFocus = doFocus()
-          if (hasFocus)
-            clearInterval(runId)
+          if (hasFocus) clearInterval(runId)
         }, 100)
       }
     }
 
     useEffect(() => {
-      if (autoFocus)
-        focus()
+      if (autoFocus) focus()
     }, [])
     useEffect(() => {
-      if (controlFocus)
-        focus()
+      if (controlFocus) focus()
     }, [controlFocus])
 
     return (
       <div className='relative'>
-        <div className={cn(className, 'invisible whitespace-pre-wrap break-all  overflow-y-auto')} style={{ minHeight, maxHeight }}>
+        <div
+          className={cn(
+            className,
+            'invisible whitespace-pre-wrap break-all  overflow-y-auto'
+          )}
+          style={{ minHeight, maxHeight }}
+        >
           {!value ? placeholder : value.replace(/\n$/, '\n ')}
         </div>
         <textarea
           ref={ref}
           autoFocus={autoFocus}
-          className={cn(className, 'absolute inset-0 resize-none overflow-hidden')}
+          className={cn(
+            className,
+            'absolute inset-0 resize-none overflow-hidden'
+          )}
           placeholder={placeholder}
           onChange={onChange}
           onKeyDown={onKeyDown}
@@ -68,7 +85,7 @@ const AutoHeightTextarea = forwardRef(
         />
       </div>
     )
-  },
+  }
 )
 
 export default AutoHeightTextarea

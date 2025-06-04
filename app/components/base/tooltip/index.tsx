@@ -28,12 +28,14 @@ const Tooltip: FC<TooltipProps> = ({
     <div className='tooltip-container'>
       {React.cloneElement(children as React.ReactElement, {
         'data-tooltip-id': selector,
-      })
-      }
+      })}
       <ReactTooltip
         id={selector}
         content={content}
-        className={classNames('!bg-white !text-xs !font-normal !text-gray-700 !shadow-lg !opacity-100', className)}
+        className={classNames(
+          '!bg-white !text-xs !font-normal !text-gray-700 !shadow-lg !opacity-100',
+          className
+        )}
         place={position}
         clickable={clickable}
       >

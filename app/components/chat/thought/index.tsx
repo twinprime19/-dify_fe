@@ -15,25 +15,17 @@ function getValue(value: string, isValueArray: boolean, index: number) {
   if (isValueArray) {
     try {
       return JSON.parse(value)[index]
-    }
-    catch (e) {
-    }
+    } catch (e) {}
   }
   return value
 }
 
-const Thought: FC<IThoughtProps> = ({
-  thought,
-  allToolIcons,
-  isFinished,
-}) => {
+const Thought: FC<IThoughtProps> = ({ thought, allToolIcons, isFinished }) => {
   const [toolNames, isValueArray]: [string[], boolean] = (() => {
     try {
       if (Array.isArray(JSON.parse(thought.tool)))
         return [JSON.parse(thought.tool), true]
-    }
-    catch (e) {
-    }
+    } catch (e) {}
     return [[thought.tool], false]
   })()
 
@@ -49,11 +41,7 @@ const Thought: FC<IThoughtProps> = ({
   return (
     <div className='my-2 space-y-2'>
       {toolThoughtList.map((item: ToolInfoInThought, index) => (
-        <Tool
-          key={index}
-          payload={item}
-          allToolIcons={allToolIcons}
-        />
+        <Tool key={index} payload={item} allToolIcons={allToolIcons} />
       ))}
     </div>
   )

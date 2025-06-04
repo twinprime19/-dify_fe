@@ -16,12 +16,9 @@ const translation = {
     configDisabled:
       'Previous session settings have been used for this session.',
     startChat: 'Start Chat',
-    privacyPolicyLeft:
-      'Please read the ',
-    privacyPolicyMiddle:
-      'privacy policy',
-    privacyPolicyRight:
-      ' provided by the app developer.',
+    privacyPolicyLeft: 'Please read the ',
+    privacyPolicyMiddle: 'privacy policy',
+    privacyPolicyRight: ' provided by the app developer.',
   },
   errorMessage: {
     valueOfVarRequired: 'Variables value can not be empty',

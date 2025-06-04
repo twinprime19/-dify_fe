@@ -27,9 +27,7 @@ const getWidthStyle = (imgNum: number) => {
   }
 }
 
-const ImageGallery: FC<Props> = ({
-  srcs,
-}) => {
+const ImageGallery: FC<Props> = ({ srcs }) => {
   const [imagePreviewUrl, setImagePreviewUrl] = useState('')
 
   const imgNum = srcs.length
@@ -47,14 +45,12 @@ const ImageGallery: FC<Props> = ({
           onClick={() => setImagePreviewUrl(src)}
         />
       ))}
-      {
-        imagePreviewUrl && (
-          <ImagePreview
-            url={imagePreviewUrl}
-            onCancel={() => setImagePreviewUrl('')}
-          />
-        )
-      }
+      {imagePreviewUrl && (
+        <ImagePreview
+          url={imagePreviewUrl}
+          onCancel={() => setImagePreviewUrl('')}
+        />
+      )}
     </div>
   )
 }

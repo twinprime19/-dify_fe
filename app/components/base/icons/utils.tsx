@@ -23,11 +23,13 @@ export function normalizeAttrs(attrs: Attrs = {}): Attrs {
         delete acc.class
         break
       case 'style':
-        (acc.style as any) = val.split(';').reduce((prev, next) => {
+        ;(acc.style as any) = val.split(';').reduce((prev, next) => {
           const pairs = next?.split(':')
 
           if (pairs[0] && pairs[1]) {
-            const k = pairs[0].replace(/([-]\w)/g, (g: string) => g[1].toUpperCase())
+            const k = pairs[0].replace(/([-]\w)/g, (g: string) =>
+              g[1].toUpperCase()
+            )
             prev[k] = pairs[1]
           }
 
@@ -44,13 +46,15 @@ export function normalizeAttrs(attrs: Attrs = {}): Attrs {
 export function generate(
   node: AbstractNode,
   key: string,
-  rootProps?: { [key: string]: any } | false,
+  rootProps?: { [key: string]: any } | false
 ): any {
   if (!rootProps) {
     return React.createElement(
       node.name,
       { key, ...normalizeAttrs(node.attributes) },
-      (node.children || []).map((child, index) => generate(child, `${key}-${node.name}-${index}`)),
+      (node.children || []).map((child, index) =>
+        generate(child, `${key}-${node.name}-${index}`)
+      )
     )
   }
 
@@ -61,6 +65,8 @@ export function generate(
       ...normalizeAttrs(node.attributes),
       ...rootProps,
     },
-    (node.children || []).map((child, index) => generate(child, `${key}-${node.name}-${index}`)),
+    (node.children || []).map((child, index) =>
+      generate(child, `${key}-${node.name}-${index}`)
+    )
   )
 }

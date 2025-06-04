@@ -9,8 +9,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(data as object, {
       headers: setSession(sessionId),
     })
-  }
-  catch (error) {
+  } catch (error) {
     return NextResponse.json([])
   }
 }
