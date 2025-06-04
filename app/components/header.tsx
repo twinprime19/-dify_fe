@@ -50,47 +50,52 @@ const Header: FC<IHeaderProps> = ({
   }
 
   return (
-    <div className='shrink-0 flex items-center justify-between h-12 px-3 bg-gray-100'>
+    <div className='shrink-0 flex items-center justify-between h-16 px-6 glass-effect border-b border-white/20 backdrop-blur-xl'>
       {isMobile ? (
-        <div
-          className='flex items-center justify-center h-8 w-8 cursor-pointer'
+        <button
+          className='flex items-center justify-center h-10 w-10 rounded-2xl hover:bg-white/10 transition-all duration-200 cursor-pointer group'
           onClick={() => onShowSideBar?.()}
         >
-          <Bars3Icon className='h-4 w-4 text-gray-500' />
-        </div>
+          <Bars3Icon className='h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors' />
+        </button>
       ) : (
-        <div></div>
+        <div className='w-10'></div>
       )}
-      <div className='flex items-center space-x-2'>
+
+      <div className='flex items-center space-x-3'>
         <AppIcon size='small' />
-        <div className=' text-sm text-gray-800 font-bold'>
-          {title}
+        <div className='flex items-center space-x-3'>
+          <h1 className='text-lg font-bold text-gray-900 tracking-tight'>
+            {title}
+          </h1>
           {isDevelopmentBypass && (
-            <span className='ml-2 px-2 py-1 text-xs bg-yellow-200 text-yellow-800 rounded'>
+            <span className='px-3 py-1.5 text-xs font-semibold bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded-full shadow-lg animate-pulse-glow'>
               DEV MODE
             </span>
           )}
         </div>
       </div>
+
       <div className='flex items-center space-x-2'>
         {isMobile ? (
-          <div
-            className='flex items-center justify-center h-8 w-8 cursor-pointer'
+          <button
+            className='flex items-center justify-center h-10 w-10 rounded-2xl hover:bg-white/10 transition-all duration-200 cursor-pointer group'
             onClick={() => onCreateNewChat?.()}
           >
-            <PencilSquareIcon className='h-4 w-4 text-gray-500' />
-          </div>
+            <PencilSquareIcon className='h-5 w-5 text-gray-600 group-hover:text-primary-600 transition-colors' />
+          </button>
         ) : (
-          <div></div>
+          <div className='w-10'></div>
         )}
+
         {(session || isDevelopmentBypass) && (
-          <div
-            className='flex items-center justify-center h-8 w-8 cursor-pointer'
+          <button
+            className='flex items-center justify-center h-10 w-10 rounded-2xl hover:bg-red-50 hover:text-red-600 transition-all duration-200 cursor-pointer group'
             onClick={isDevelopmentBypass ? handleBypassLogout : handleLogout}
             title={isDevelopmentBypass ? 'Exit Dev Mode' : 'Logout'}
           >
-            <ArrowRightOnRectangleIcon className='h-4 w-4 text-gray-500 hover:text-gray-700' />
-          </div>
+            <ArrowRightOnRectangleIcon className='h-5 w-5 text-gray-600 group-hover:text-red-600 transition-colors' />
+          </button>
         )}
       </div>
     </div>

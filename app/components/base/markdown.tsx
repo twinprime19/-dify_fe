@@ -14,11 +14,11 @@ export function Markdown(props: { content: string }) {
         remarkPlugins={[RemarkMath, RemarkGfm, RemarkBreaks]}
         rehypePlugins={[RehypeKatex]}
         components={{
-          code({ node, inline, className, children, ...props }) {
+          code({ className, children, ...props }: any) {
             const match = /language-(\w+)/.exec(className || '')
-            return !inline && match ? (
+            const isInline = !match
+            return !isInline ? (
               <SyntaxHighlighter
-                {...props}
                 children={String(children).replace(/\n$/, '')}
                 style={atelierHeathLight}
                 language={match[1]}
@@ -26,13 +26,19 @@ export function Markdown(props: { content: string }) {
                 PreTag='div'
               />
             ) : (
-              <code {...props} className={className}>
+              <code className={className}>
                 {children}
               </code>
             )
           },
+          a({ children, ...props }: any) {
+            return (
+              <a {...props} target="_blank" rel="noopener noreferrer">
+                {children}
+              </a>
+            )
+          },
         }}
-        linkTarget="_blank"
       >
         {props.content}
       </ReactMarkdown>

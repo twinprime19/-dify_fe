@@ -19,11 +19,13 @@
     "@mdx-js/loader": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
     "@monaco-editor/react": "^4.7.0",
+    "@tailwindcss/postcss": "^4.1.8",
     "@types/node": "^22.15.29",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.6",
     "@types/react-syntax-highlighter": "^15.5.13",
     "ahooks": "^3.8.5",
+    "autoprefixer": "^10.4.21",
     "axios": "^1.9.0",
     "classnames": "^2.5.1",
     "copy-to-clipboard": "^3.3.3",
@@ -38,6 +40,7 @@
     "negotiator": "^1.0.0",
     "next": "^15.3.3",
     "next-auth": "^4.24.11",
+    "postcss": "^8.5.4",
     "rc-textarea": "^1.10.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -56,6 +59,7 @@
     "scheduler": "^0.26.0",
     "server-only": "^0.0.1",
     "swr": "^2.3.3",
+    "tailwindcss": "^4.1.8",
     "typescript": "^5.8.3",
     "use-context-selector": "^2.0.0",
     "uuid": "^11.1.0"
@@ -66,13 +70,10 @@
     "@types/js-cookie": "^3.0.6",
     "@types/negotiator": "^0.6.3",
     "@types/uuid": "^10.0.0",
-    "autoprefixer": "^10.4.21",
     "eslint": "^9.28.0",
     "eslint-config-next": "^15.3.3",
     "lint-staged": "^16.1.0",
-    "postcss": "^8.5.4",
-    "prettier": "^3.5.3",
-    "tailwindcss": "^4.1.8"
+    "prettier": "^3.5.3"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [

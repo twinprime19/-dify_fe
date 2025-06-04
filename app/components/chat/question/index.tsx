@@ -2,8 +2,6 @@
 import type { FC } from 'react'
 import React from 'react'
 import type { IChatItem } from '../type'
-import s from '../style.module.css'
-
 import { Markdown } from '@/app/components/base/markdown'
 import ImageGallery from '@/app/components/base/image-gallery'
 
@@ -20,26 +18,40 @@ const Question: FC<IQuestionProps> = ({
   useCurrentUserAvatar,
   imgSrcs,
 }) => {
-  const userName = ''
+  const userName = 'You'
   return (
-    <div className='flex items-start justify-end' key={id}>
-      <div>
-        <div className={`${s.question} relative text-sm text-gray-900`}>
-          <div
-            className="mr-2 py-3 px-4 bg-blue-500 rounded-tl-2xl rounded-b-2xl"
-          >
-            {imgSrcs && imgSrcs.length > 0 && <ImageGallery srcs={imgSrcs} />}
+    <div className="flex items-start justify-end gap-3 mb-6" key={id}>
+      {/* Message Content */}
+      <div className="max-w-2xl">
+        <div className="bg-primary-500 text-white rounded-2xl rounded-tr-md px-4 py-3 shadow-sm">
+          {imgSrcs && imgSrcs.length > 0 && (
+            <div className="mb-3">
+              <ImageGallery srcs={imgSrcs} />
+            </div>
+          )}
+          <div className="prose prose-sm prose-invert max-w-none">
             <Markdown content={content} />
           </div>
         </div>
-      </div>
-      {useCurrentUserAvatar ? (
-        <div className='w-10 h-10 shrink-0 leading-10 text-center mr-2 rounded-full bg-primary-600 text-white'>
-          {userName?.[0].toLocaleUpperCase()}
+        <div className="text-xs text-gray-500 mt-1 text-right">
+          {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
         </div>
-      ) : (
-        <div className={`${s.questionIcon} w-10 h-10 shrink-0 `}></div>
-      )}
+      </div>
+
+      {/* User Avatar */}
+      <div className="flex-shrink-0">
+        {useCurrentUserAvatar ? (
+          <div className="w-8 h-8 rounded-full bg-gradient-to-r from-primary-500 to-primary-600 flex items-center justify-center text-white text-sm font-medium shadow-sm">
+            {userName?.[0]?.toUpperCase() || 'U'}
+          </div>
+        ) : (
+          <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+            <svg className="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+            </svg>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

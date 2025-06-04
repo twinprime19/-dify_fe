@@ -476,28 +476,6 @@ const Main: FC = () => {
       return
     }
 
-    // In development bypass mode, simulate a response without making API calls
-    if (isDevelopmentBypass) {
-      const questionId = `question-${Date.now()}`
-      const questionItem = {
-        id: questionId,
-        content: message,
-        isAnswer: false,
-        message_files: files,
-      }
-
-      const responseId = `response-${Date.now()}`
-      const responseItem = {
-        id: responseId,
-        content: `Development mode response to: "${message}"\n\nThis is a simulated response since you're in development bypass mode. The actual API is not being called.`,
-        isAnswer: true,
-      }
-
-      const newList = [...getChatList(), questionItem, responseItem]
-      setChatList(newList)
-      return
-    }
-
     const data: Record<string, any> = {
       inputs: currInputs,
       query: message,
