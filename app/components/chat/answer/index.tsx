@@ -26,10 +26,10 @@ const RatingButton: FC<{
       onClick={onClick}
       disabled={disabled}
       className={`p-1.5 rounded-lg transition-all duration-200 ${isActive
-          ? isLike
-            ? 'bg-green-100 text-green-600 hover:bg-green-200'
-            : 'bg-red-100 text-red-600 hover:bg-red-200'
-          : 'bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-gray-700'
+        ? isLike
+          ? 'bg-green-100 text-green-600 hover:bg-green-200'
+          : 'bg-red-100 text-red-600 hover:bg-red-200'
+        : 'bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-gray-700'
         } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
     >
       <Icon className="w-4 h-4" />

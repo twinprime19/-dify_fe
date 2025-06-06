@@ -141,6 +141,13 @@ module.exports = {
           800: '#6B21A8',
           900: '#581C87',
         },
+        // ChatGPT-style message backgrounds
+        user: {
+          DEFAULT: '#DCF0FF',
+        },
+        ai: {
+          DEFAULT: '#F7F7F8',
+        },
         indigo: {
           50: '#EEF2FF',
           100: '#E0E7FF',
